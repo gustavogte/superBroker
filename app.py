@@ -1,4 +1,4 @@
-from account import Account
+from b_classes import Account
 
 def main():
     account = Account()
