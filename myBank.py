@@ -1,4 +1,4 @@
-from b_classes import Account
+from bank_pkg.account import Account
 
 def main():
     account = Account()
