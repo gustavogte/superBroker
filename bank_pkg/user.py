@@ -1,6 +1,3 @@
-import os
-
-
 class User:
     def __init__(self, name, password, email, phone):
         self.name = name
