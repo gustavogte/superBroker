@@ -1,4 +1,10 @@
+import csv
+import os
+import hashlib
+import secrets  # to generate a secure random salt
+import datetime
 class User:
+
     def __init__(self, name, password, email, phone):
         self.name = name
         self.password = password
