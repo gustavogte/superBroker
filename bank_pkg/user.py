@@ -6,12 +6,17 @@ class User:
         self.phone = phone
 
     def __str__(self):
-        return ("Name: " + self.name
-            + " Password: " + "********"#self.password
-            + " Email: " + self.email
-            + " Phone: " + self.phone
+        return (
+            "Name: "
+            + self.name
+            + " Password: "
+            + "********"  # self.password
+            + " Email: "
+            + self.email
+            + " Phone: "
+            + self.phone
         )
-    
+
     @classmethod
     def sign_up(cls):
         print("Sign up")
@@ -24,7 +29,7 @@ class User:
             return user
         except ValueError as err:
             print(err)
-            return User.sign_up(cls) # tal vez esto hay que dejarlo fuera de la función.
+            return User.sign_up()  # tal vez esto hay que dejarlo fuera de la función.
 
     # Getter => @property
     # _ use for the function not to colide with the variable
@@ -32,15 +37,15 @@ class User:
     @property
     def name(self):
         return self._name
-    
+
     @property
     def email(self):
         return self._email
-    
+
     @property
     def password(self):
         return self._password
-    
+
     @property
     def phone(self):
         return self._phone
@@ -57,20 +62,18 @@ class User:
         if "@" not in email:
             raise ValueError("Invalid email")
         self._email = email
-    
+
     @password.setter
     def password(self, password):
         if not password:
             raise ValueError("Missing password")
         self._password = password
-    
+
     @phone.setter
     def phone(self, phone):
         if not phone:
             raise ValueError("Missing phone")
         self._phone = phone
-
-
 
     def login():
         print("Login")
@@ -78,15 +81,17 @@ class User:
         password = input("password: ")
         print(f"Hello User: {user}")
 
+
 def main():
-    print('Main ()')
+    print("Main ()")
     user1 = User.sign_up()
     user2 = User.sign_up()
-    users =[user1, user2]
+    users = [user1, user2]
     print(user1)
     print(user2)
     print(users)
     for user in users:
         print(user)
+
 
 main()
