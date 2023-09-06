@@ -12,8 +12,19 @@ class User:
             + " Phone: " + self.phone
         )
     
-    def __add__(self):
-        pass
+    @classmethod
+    def sign_up(cls):
+        print("Sign up")
+        name = input("Name: ")
+        password = input("Password: ")
+        email = input("Email: ")
+        phone = input("Phone: ")
+        try:
+            user = cls(name, password, email, phone)
+            return user
+        except ValueError as err:
+            print(err)
+            return User.sign_up(cls) # tal vez esto hay que dejarlo fuera de la función.
 
     # Getter => @property
     # _ use for the function not to colide with the variable
@@ -59,19 +70,6 @@ class User:
             raise ValueError("Missing phone")
         self._phone = phone
 
-    
-    def sign_up():
-        print("Sign up")
-        name = input("Name: ")
-        password = input("Password: ")
-        email = input("Email: ")
-        phone = input("Phone: ")
-        try:
-            user = User(name, password, email, phone)
-            return user
-        except ValueError as err:
-            print(err)
-            return User.sign_up()
 
 
     def login():
@@ -81,15 +79,14 @@ class User:
         print(f"Hello User: {user}")
 
 def main():
-    print('hello gus')
+    print('Main ()')
     user1 = User.sign_up()
     user2 = User.sign_up()
     users =[user1, user2]
     print(user1)
-    print(type(user1))
     print(user2)
-    print(type(user2))
     print(users)
-    print(type(users))  
+    for user in users:
+        print(user)
 
 main()
