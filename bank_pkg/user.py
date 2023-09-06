@@ -83,13 +83,10 @@ class User:
 
 
 def main():
+    users = []
     print("Main ()")
-    user1 = User.sign_up()
-    user2 = User.sign_up()
-    users = [user1, user2]
-    print(user1)
-    print(user2)
-    print(users)
+    users.append(User.sign_up())
+    users.append(User.sign_up())
     for user in users:
         print(user)
 
