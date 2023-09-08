@@ -3,18 +3,22 @@ import os
 import hashlib
 import secrets  # to generate a secure random salt
 import datetime
-class User:
 
-    def __init__(self, name, password, email, phone):
-        self.name = name
+
+class User:
+    users = []
+    file_path = "user_data.csv"
+
+    def __init__(self, usrname, password, email, phone):
+        self.usrname = usrname
         self.password = password
         self.email = email
         self.phone = phone
 
     def __str__(self):
         return (
-            "Name: "
-            + self.name
+            "User Name: "
+            + self.usrname
             + " Password: "
             + "********"  # self.password
             + " Email: "
@@ -24,25 +28,49 @@ class User:
         )
 
     @classmethod
+    def initialize_csv(cls):
+        if not os.path.exists(cls.file_path):
+            with open(cls.file_path, "w", newline="") as file:
+                writer = csv.DictWriter(
+                    file, fieldnames=["usrname", "password", "email", "phone"]
+                )
+                writer.writeheader()
+
+    @classmethod
     def sign_up(cls):
         print("Sign up")
-        name = input("Name: ")
+        usrname = input("User Name: ")
         password = input("Password: ")
         email = input("Email: ")
         phone = input("Phone: ")
         try:
-            user = cls(name, password, email, phone)
+            user = cls(usrname, password, email, phone)
             return user
         except ValueError as err:
             print(err)
             return User.sign_up()  # tal vez esto hay que dejarlo fuera de la función.
 
+    @classmethod
+    def save_user(cls, usr):
+        with open(cls.file_path, "a", newline="") as file:
+            writer = csv.DictWriter(
+                file, fieldnames=["usrname", "password", "email", "phone"]
+            )
+            writer.writerow(
+                {
+                    "usrname": usr.usrname,
+                    "password": usr.password,
+                    "email": usr.email,
+                    "phone": usr.phone,
+                }
+            )
+
     # Getter => @property
     # _ use for the function not to colide with the variable
     # _name is a private variable (honor system, not forced)
     @property
-    def name(self):
-        return self._name
+    def usrname(self):
+        return self._usrname
 
     @property
     def email(self):
@@ -57,11 +85,11 @@ class User:
         return self._phone
 
     # Setter => @x.setter
-    @name.setter
-    def name(self, name):
-        if not name:
+    @usrname.setter
+    def usrname(self, usrname):
+        if not usrname:
             raise ValueError("Missing name")
-        self._name = name
+        self._usrname = usrname
 
     @email.setter
     def email(self, email):
@@ -83,18 +111,17 @@ class User:
 
     def login():
         print("Login")
-        user = input("user: ")
+        user_name = input("user: ")
         password = input("password: ")
-        print(f"Hello User: {user}")
+        print(f"Hello User: {user_name}")
 
 
 def main():
-    users = []
-    print("Main ()")
-    users.append(User.sign_up())
-    users.append(User.sign_up())
-    for user in users:
-        print(user)
+    usr = User.sign_up()
+    print(usr)
+    User.initialize_csv()
+    User.save_user(usr)
+    print(User.users)
 
 
 main()
