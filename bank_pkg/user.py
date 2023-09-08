@@ -17,7 +17,7 @@ class User:
 
     def __str__(self):
         return (
-            "User Name: "
+            "Username: "
             + self.usrname
             + " Password: "
             + "********"  # self.password
@@ -37,6 +37,15 @@ class User:
                 writer.writeheader()
 
     @classmethod
+    def check_usr(cls, user):
+        with open(cls.file_path, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row["usrname"] == user:
+                    return True
+            return False
+
+    @classmethod
     def sign_up(cls):
         print("Sign up")
         usrname = input("User Name: ")
@@ -45,10 +54,12 @@ class User:
         phone = input("Phone: ")
         try:
             user = cls(usrname, password, email, phone)
+            print(f"Welome to SuperBroker {usrname}!")
+            cls.save_user(user)
             return user
         except ValueError as err:
             print(err)
-            return User.sign_up()  # tal vez esto hay que dejarlo fuera de la función.
+            return cls.sign_up()  # tal vez esto se podría dejar fuera de la función.
 
     @classmethod
     def save_user(cls, usr):
@@ -64,6 +75,25 @@ class User:
                     "phone": usr.phone,
                 }
             )
+
+    @classmethod
+    def login(cls):
+        print("Login")
+        usrname = input("Username: ")
+        password = input("Password: ")
+        with open(cls.file_path, "r") as file:
+            reader = csv.DictReader(file)
+            if cls.check_usr(usrname) == True:
+                for row in reader:
+                    if row["password"] == password:
+                        print(f"Welcome {usrname}!")
+                        return True
+                else:
+                    print("Wrong password")
+                    return False
+            else:
+                print("User does not exist")
+                return False
 
     # Getter => @property
     # _ use for the function not to colide with the variable
@@ -89,6 +119,8 @@ class User:
     def usrname(self, usrname):
         if not usrname:
             raise ValueError("Missing name")
+        elif User.check_usr(usrname) == True:
+            raise ValueError("User already exists")
         self._usrname = usrname
 
     @email.setter
@@ -109,19 +141,13 @@ class User:
             raise ValueError("Missing phone")
         self._phone = phone
 
-    def login():
-        print("Login")
-        user_name = input("user: ")
-        password = input("password: ")
-        print(f"Hello User: {user_name}")
-
 
 def main():
-    usr = User.sign_up()
-    print(usr)
-    User.initialize_csv()
-    User.save_user(usr)
-    print(User.users)
-
+    # usr = User.sign_up()
+    # print(usr)
+    # User.initialize_csv()
+    # User.save_user(usr)
+    # print(User.users)
+    User.sign_up()
 
 main()
