@@ -37,6 +37,17 @@ class User:
                 writer.writeheader()
 
     @classmethod
+    def hash_password(cls, password, salt=None):
+        if not salt:
+            salt = secrets.token_hex(16)
+        password_hash = hashlib.sha256((password + salt).encode()).hexdigest()
+        return password_hash, salt
+
+    @classmethod
+    def check_password(cls, password, hashed_password, salt):
+        return hashed_password == cls.hash_password(password, salt)[0]
+
+    @classmethod
     def check_usr(cls, user):
         with open(cls.file_path, "r") as file:
             reader = csv.DictReader(file)
@@ -96,11 +107,11 @@ class User:
                 return False
 
     # Getter => @property
-    # _ use for the function not to colide with the variable
-    # _name is a private variable (honor system, not forced)
-    @property
+    @property 
     def usrname(self):
         return self._usrname
+    # _ use for the function not to colide with the variable
+    # _name is a private variable (honor system, not forced)
 
     @property
     def email(self):
@@ -141,6 +152,7 @@ class User:
             raise ValueError("Missing phone")
         self._phone = phone
 
+User.initialize_csv
 
 def main():
     # usr = User.sign_up()
