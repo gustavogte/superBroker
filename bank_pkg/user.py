@@ -12,6 +12,8 @@ class User:
     def __init__(self, usrname, password, email, phone):
         self.usrname = usrname
         self.password = password
+        self.salt = secrets.token_hex(16)
+        self.hashed_password = hashlib.sha256((password + self.salt).encode()).hexdigest()
         self.email = email
         self.phone = phone
 
@@ -20,7 +22,7 @@ class User:
             "Username: "
             + self.usrname
             + " Password: "
-            + "********"  # self.password
+            + self.hashed_password            
             + " Email: "
             + self.email
             + " Phone: "
@@ -32,7 +34,7 @@ class User:
         if not os.path.exists(cls.file_path):
             with open(cls.file_path, "w", newline="") as file:
                 writer = csv.DictWriter(
-                    file, fieldnames=["usrname", "password", "email", "phone"]
+                    file, fieldnames=["usrname", "password", "salt", "email", "phone"]
                 )
                 writer.writeheader()
 
@@ -61,10 +63,12 @@ class User:
         print("Sign up")
         usrname = input("User Name: ")
         password = input("Password: ")
+        salt = secrets.token_hex(16)
+        hashed_pasword = hashlib.sha256((password + salt).encode()).hexdigest()
         email = input("Email: ")
         phone = input("Phone: ")
         try:
-            user = cls(usrname, password, email, phone)
+            user = cls(usrname, password, salt, hashed_pasword, email, phone)
             print(f"Welome to SuperBroker {usrname}!")
             cls.save_user(user)
             return user
@@ -81,7 +85,7 @@ class User:
             writer.writerow(
                 {
                     "usrname": usr.usrname,
-                    "password": usr.password,
+                    "password": usr.hashed_password,
                     "email": usr.email,
                     "phone": usr.phone,
                 }
@@ -96,7 +100,7 @@ class User:
             reader = csv.DictReader(file)
             if cls.check_usr(usrname) == True:
                 for row in reader:
-                    if row["password"] == password:
+                    if cls.check_password(password, row["password"], row["salt"]):
                         print(f"Welcome {usrname}!")
                         return True
                 else:
@@ -160,6 +164,7 @@ def main():
     # User.initialize_csv()
     # User.save_user(usr)
     # print(User.users)
+    User.initialize_csv()
     User.sign_up()
 
 main()
