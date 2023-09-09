@@ -1,7 +1,6 @@
-usrname,hashed_password,salt,email,phone
-Gustavo,8b8979b65d52bd01dbeacc21acb2dd665ad2f4fbfa1fc5d1477601d34be9f4e3,cde4a8bf20d6606f8dcdba4c66b39647,@,33
-Pedro,6df79a058d2c7452fb208ddf488f36095187efdbd76815e1c23ee6ce15a56a8e,a2bd691aff74126577929613595e8b0f,@@,38
-Gus,23c03c9fbbce06b33899e6a9ed35d48b914e5d2aaa46b12444f226e68a05e647,4de10f56c5f0e0d89d4f259acc2bfce7,@@@,22
-Juan,91fc376d2b0fdcd3d66dd3d31565fec6c1701652089c9d7e8dff3c01c340ed41,c5e44bd8558cdc24f6a9f4872de0c9ea,@p,44
-Luis,0567726439586daf4732e81161239050cc3e32084287f0cdc9cbb2ec6d3e4e3f,379723936773ad1ed8f4dc5c6f4480d1,@l,99
-David,2bd7511f7af0dfa3cd82ed7e76f197bb56d342a33299f69aa92aac196e4ed9b0,50b6c4b3d82bce8e30f0a7a3a20c1ef7,@2,09
+usrname,password,email,phone
+Gus,$2b$12$omZdhfzTXaGasg7ZjWm7oe80eAjHWKv8WQcjYQxAGSjP9t.8q/cQe,@,1
+Juan,$2b$12$lWyO6Q43YuNjtjpcnZPlBuxsbn5PKlp1sKbSfRifoIoio7entchJS,@@,2
+ana,$2b$12$M8U4dSGgD6Vnfj6aZM5MPurdKUNLIG8C7/8knpLlslu3BZ3ZRFOka,@a,33
+Luis,$2b$12$xI9dl9Jm6mDCuboieyGBWupcuuBRB9/Rc7iV591rfb/Q3/BeSveU6,4@,4
+Pedro,$2b$12$vY2rnBoAO8ZTGq3XMu9QIuFlsqKWjffqVkwdWZh2vO/tfKfQFV0he,5@,5
