@@ -1,6 +1,6 @@
 import csv
 import os
-import hashlib
+import hashlib # is better to install bcrypt library
 import secrets  # to generate a secure random salt
 import datetime
 
@@ -9,32 +9,12 @@ class User:
     users = []
     file_path = "user_data.csv"
 
-    def __init__(self, usrname, password, email, phone):
-        self.usrname = usrname
-        self.password = password
-        self.salt = secrets.token_hex(16)
-        self.hashed_password = hashlib.sha256((password + self.salt).encode()).hexdigest()
-        self.email = email
-        self.phone = phone
-
-    def __str__(self):
-        return (
-            "Username: "
-            + self.usrname
-            + " Password: "
-            + self.hashed_password            
-            + " Email: "
-            + self.email
-            + " Phone: "
-            + self.phone
-        )
-
     @classmethod
     def initialize_csv(cls):
         if not os.path.exists(cls.file_path):
             with open(cls.file_path, "w", newline="") as file:
                 writer = csv.DictWriter(
-                    file, fieldnames=["usrname", "password", "salt", "email", "phone"]
+                    file, fieldnames=["usrname", "hashed_password", "salt", "email", "phone"]
                 )
                 writer.writeheader()
 
@@ -46,8 +26,12 @@ class User:
         return password_hash, salt
 
     @classmethod
-    def check_password(cls, password, hashed_password, salt):
-        return hashed_password == cls.hash_password(password, salt)[0]
+    def check_password(cls, username, password):
+        with open(cls.file_path, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row["usrname"] == username:
+                    return cls.hash_password(password, row["salt"])[0] == row["hashed_password"]
 
     @classmethod
     def check_usr(cls, user):
@@ -60,15 +44,16 @@ class User:
 
     @classmethod
     def sign_up(cls):
+        cls.initialize_csv
         print("Sign up")
         usrname = input("User Name: ")
         password = input("Password: ")
-        salt = secrets.token_hex(16)
-        hashed_pasword = hashlib.sha256((password + salt).encode()).hexdigest()
+        hashed_password = cls.hash_password(password)[0]
+        salt = cls.hash_password(password)[1]
         email = input("Email: ")
         phone = input("Phone: ")
         try:
-            user = cls(usrname, password, salt, hashed_pasword, email, phone)
+            user = cls(usrname, password, hashed_password, salt, email, phone)
             print(f"Welome to SuperBroker {usrname}!")
             cls.save_user(user)
             return user
@@ -80,12 +65,13 @@ class User:
     def save_user(cls, usr):
         with open(cls.file_path, "a", newline="") as file:
             writer = csv.DictWriter(
-                file, fieldnames=["usrname", "password", "email", "phone"]
+                file, fieldnames=["usrname", "password", "salt", "email", "phone"]
             )
             writer.writerow(
                 {
                     "usrname": usr.usrname,
                     "password": usr.hashed_password,
+                    "salt": usr.salt,
                     "email": usr.email,
                     "phone": usr.phone,
                 }
@@ -100,7 +86,7 @@ class User:
             reader = csv.DictReader(file)
             if cls.check_usr(usrname) == True:
                 for row in reader:
-                    if cls.check_password(password, row["password"], row["salt"]):
+                    if cls.check_password(password, row["hashed_password"], row["salt"]):
                         print(f"Welcome {usrname}!")
                         return True
                 else:
@@ -109,6 +95,26 @@ class User:
             else:
                 print("User does not exist")
                 return False
+
+    def __init__(self, usrname, password, hashed_password, salt, email, phone):
+        self.usrname = usrname
+        self.password = password
+        self.hashed_password = User.hash_password(password, salt)[0]
+        self.salt = User.hash_password(password, salt)[1]
+        self.email = email
+        self.phone = phone
+
+    def __str__(self):
+        return (
+            "Username: "
+            + self.usrname
+            + " Password: "
+            + self.hashed_password        
+            + " Email: "
+            + self.email
+            + " Phone: "
+            + self.phone
+        )
 
     # Getter => @property
     @property 
@@ -156,15 +162,9 @@ class User:
             raise ValueError("Missing phone")
         self._phone = phone
 
-User.initialize_csv
-
 def main():
-    # usr = User.sign_up()
-    # print(usr)
-    # User.initialize_csv()
-    # User.save_user(usr)
-    # print(User.users)
-    User.initialize_csv()
-    User.sign_up()
+    #User.sign_up()
+    User.login()
+
 
 main()
