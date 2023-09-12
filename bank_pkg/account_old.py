@@ -20,16 +20,16 @@ class Account:
             + self.balance
         )
 
+    # this is a getter
+    @property
+    def balance(self):
+        return self._balance
+
     def deposit(self, amount):
         self._balance += amount
 
     def withdraw(self, amount):
         self._balance -= amount
-
-    # this is a getter
-    @property
-    def balance(self):
-        return self._balance
 
     @balance.setter
     def balance(self, value):

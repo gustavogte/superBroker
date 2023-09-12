@@ -1,14 +1,33 @@
 import csv
 import os
 import bcrypt
-#import hashlib # is better to install bcrypt library
-#import secrets  # to generate a secure random salt
-
-
+from account import Account
 
 class User:
-    users = []
+# Instance properties
     file_path = "user_data.csv"
+
+# Instance Methods
+    def __init__(self, usrname, password, hashed_password, email, phone):
+        self.usrname = usrname
+        self.password = password
+        self.hashed_password = hashed_password
+        self.email = email
+        self.phone = phone
+
+    def __str__(self):
+        return (
+            "Username: "
+            + self.usrname
+            + " Password: "
+            + self.hashed_password
+            + " Email: "
+            + self.email
+            + " Phone: "
+            + self.phone
+            + " Accounts: "
+            + self.accounts
+        )
 
     @classmethod
     def initialize_csv(cls):
@@ -22,14 +41,14 @@ class User:
     @classmethod
     def hash_password(cls, password):
         salt = bcrypt.gensalt()
-        hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
-        return hashed.decode('utf-8')
+        hashed = bcrypt.hashpw(password.encode("utf-8"), salt)
+        return hashed.decode("utf-8")
 
     @classmethod
     def check_password(cls, password, hashed_password):
-        return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
     # va a retornar True if password ok or False if not.
-
+        return bcrypt.checkpw(password.encode("utf-8"), hashed_password.encode("utf-8"))
+    
     @classmethod
     def check_usr(cls, user):
         with open(cls.file_path, "r") as file:
@@ -75,11 +94,13 @@ class User:
     def login(cls):
         print("Login")
         usrname = input("Username: ")
-        password = input("Password: ")     
+        password = input("Password: ")
         with open(cls.file_path, "r") as file:
             reader = csv.DictReader(file)
             for row in reader:
-                if row["usrname"] == usrname and cls.check_password(password, row["password"]):
+                if row["usrname"] == usrname and cls.check_password(
+                    password, row["password"]
+                ):
                     print(f"Welcome {usrname}!")
                     return True
             if not cls.check_usr(usrname):
@@ -88,32 +109,13 @@ class User:
             else:
                 print("Invalid password")
             return False
-                
-    def __init__(self, usrname, password, hashed_password, email, phone):
-        self.usrname = usrname
-        self.password = password
-        self.hashed_password = hashed_password
-        self.email = email
-        self.phone = phone
-
-    def __str__(self):
-        return (
-            "Username: "
-            + self.usrname
-            + " Password: "
-            + self.hashed_password        
-            + " Email: "
-            + self.email
-            + " Phone: "
-            + self.phone
-        )
 
     # Getter => @property
-    @property 
+    @property
     def usrname(self):
-        return self._usrname
     # _ use for the function not to colide with the variable
     # _name is a private variable (honor system, not forced)
+        return self._usrname
 
     @property
     def email(self):
@@ -126,7 +128,7 @@ class User:
     @property
     def phone(self):
         return self._phone
-
+    
     # Setter => @x.setter
     @usrname.setter
     def usrname(self, usrname):
@@ -154,10 +156,13 @@ class User:
             raise ValueError("Missing phone")
         self._phone = phone
 
+
 User.initialize_csv()
 
+
 def main():
-    #User.sign_up()
+   # User.sign_up()
     User.login()
+
 
 main()
