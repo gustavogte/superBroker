@@ -7,7 +7,7 @@ def main():
     selection = menu_1()
     if selection == 1:
         user = User.sign_up()
-        print(f"Welcome {user.name}")
+        print(f"Welcome {user.name}!")
         input("Press any key to continue...")
         users = list()
         print(type(users))
