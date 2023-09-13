@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 class Account:
-    file_path = "data/account_data.csv"
+    file_path = "../data/account_data.csv"
     accounts = dict()
     account_num = 100
 
@@ -155,26 +155,16 @@ class Account:
 Account.initialize_csv()
 
 def main():
-    usrname = input("Whats your usrname: ")
-    account = Account.create_account(usrname)
-    print(account)
-    usrname = input("Whats your usrname: ")
-    account2 = Account.create_account(usrname) #class Method
-    print(account2)
-    #print(Account.account_num)
-    #account3 = Account("Jenny", 3, 10) # instance
-    #print(account3)
-    account.deposit(50000)
-    print(account)
-    account.withdraw(500)
-    print(account)
-    account2.deposit(70000)
-    account2.withdraw(2000)
-    print(account2)
-    
-
-
-
+    print("hello Account")
+    username = input("Username: ")
+    account1 = Account.create_account(username)
+    print(account1)
+    amount = int(input("Deposit: "))
+    account1.deposit(amount)
+    print(account1)
+    amount = int(input("Withdraw: "))
+    account1.withdraw(amount)
+    print(account1)
 
 main()
 

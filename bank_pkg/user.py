@@ -1,12 +1,12 @@
 import csv
 import os
 import bcrypt
-from account import Account
+#from account import Account
 
 
 class User:
     # Instance properties
-    file_path = "data/user_data.csv"
+    file_path = "../data/user_data.csv"
 
     # Instance Methods
     def __init__(self, usrname, password, hashed_password, email, phone):
@@ -159,13 +159,12 @@ class User:
 
 User.initialize_csv()
 
-
 def main():
-    print("hello")
+    print("hello User")
+    #User.login()
+    User.sign_up() 
 
-if __name__ == "__main__":
-    main()
-
+main()
 
 
 
