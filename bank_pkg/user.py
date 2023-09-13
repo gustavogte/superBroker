@@ -3,11 +3,12 @@ import os
 import bcrypt
 from account import Account
 
-class User:
-# Instance properties
-    file_path = "user_data.csv"
 
-# Instance Methods
+class User:
+    # Instance properties
+    file_path = "data/user_data.csv"
+
+    # Instance Methods
     def __init__(self, usrname, password, hashed_password, email, phone):
         self.usrname = usrname
         self.password = password
@@ -46,9 +47,9 @@ class User:
 
     @classmethod
     def check_password(cls, password, hashed_password):
-    # va a retornar True if password ok or False if not.
+        # va a retornar True if password ok or False if not.
         return bcrypt.checkpw(password.encode("utf-8"), hashed_password.encode("utf-8"))
-    
+
     @classmethod
     def check_usr(cls, user):
         with open(cls.file_path, "r") as file:
@@ -113,8 +114,8 @@ class User:
     # Getter => @property
     @property
     def usrname(self):
-    # _ use for the function not to colide with the variable
-    # _name is a private variable (honor system, not forced)
+        # _ use for the function not to colide with the variable
+        # _name is a private variable (honor system, not forced)
         return self._usrname
 
     @property
@@ -128,7 +129,7 @@ class User:
     @property
     def phone(self):
         return self._phone
-    
+
     # Setter => @x.setter
     @usrname.setter
     def usrname(self, usrname):
@@ -156,13 +157,17 @@ class User:
             raise ValueError("Missing phone")
         self._phone = phone
 
-
 User.initialize_csv()
 
 
 def main():
-   # User.sign_up()
-    User.login()
+    print("hello")
+
+if __name__ == "__main__":
+    main()
 
 
-main()
+
+
+
+
