@@ -4,15 +4,13 @@ from datetime import datetime
 
 class Account:
     file_path = "../data/account_data.csv"
-    accounts = dict()
+    accounts = list()
     account_num = 100
 
     def __init__(self, usrname, account_num, balance):
         self.usrname = usrname
-        self.account_num = account_num
+        self.account_num = Account.get_last_account() + 1 
         self.balance = balance
-
-        Account.account_num = Account.account_num + 1
         
     def __str__(self):
         return (
@@ -26,9 +24,11 @@ class Account:
 
     def deposit(self, amount):
         self._balance += amount
+        Account.update_balance(self._balance)
 
     def withdraw(self, amount):
         self._balance -= amount
+        Account.update_balance(self._balance)
 
     # this is a getter
     
@@ -61,6 +61,17 @@ class Account:
         return account
 
     @classmethod
+    def get_last_account(cls):
+        with open(cls.file_path, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                Account.accounts.append(int(row["account_num"]))
+            try:
+                return max(Account.accounts)
+            except (ValueError):
+                return 100
+
+    @classmethod
     def save_account(cls, account):
         with open(cls.file_path, "a", newline="") as file:
             writer = csv.DictWriter(
@@ -84,10 +95,20 @@ class Account:
             return False
     
     @classmethod
+    def update_balance(cls, new_balance):
+        with open(cls.file_path, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row["account_num"] == cls.account_num:
+                    row["balance"] = new_balance
+                    return row["balance"]
+            return False
+
+    @classmethod
     def save_transaction(cls):
-        with open("transaction_data.csv", "a", newline="") as file:
+        with open("../data/transaction_data.csv", "a", newline="") as file:
             writer = csv.DictWriter(file, fieldnames=["account_num", "amount", "balance", "date"])
-            writer.writerow({"account_no": cls.account_num, "amount": cls.amount, "balance": cls.balance, "date": datetime.now()})
+            writer.writerow({"account_num": cls.account_num, "amount": cls.amount, "balance": cls.balance, "date": datetime.now()})
 
     @classmethod
     def get_balance(cls, account):
@@ -113,7 +134,7 @@ class Account:
             reader = csv.DictReader(file)
             for row in reader:
                 if row["usrname"] == usr:
-                    return row["account_no"]
+                    return row["account_num"]
             return False
         
     @classmethod
@@ -155,16 +176,22 @@ class Account:
 Account.initialize_csv()
 
 def main():
+    
     print("hello Account")
     username = input("Username: ")
     account1 = Account.create_account(username)
     print(account1)
-    amount = int(input("Deposit: "))
-    account1.deposit(amount)
-    print(account1)
-    amount = int(input("Withdraw: "))
-    account1.withdraw(amount)
-    print(account1)
+
+    last = Account.get_last_account()
+    print(last)
+
+    
+    #amount = int(input("Deposit: "))
+    #account1.deposit(amount)
+    #print(account1)
+    #amount = int(input("Withdraw: "))
+    #account1.withdraw(amount)
+    #print(account1)
 
 main()
 
