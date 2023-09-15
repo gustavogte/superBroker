@@ -1,17 +1,16 @@
 import csv
 import os
 import bcrypt
-#from account import Account
+from .account import Account
 
 
 class User:
     # Instance properties
-    file_path = "../data/user_data.csv"
+    file_path = "./data/user_data.csv"
 
     # Instance Methods
-    def __init__(self, usrname, password, hashed_password, email, phone):
+    def __init__(self, usrname, hashed_password, email, phone):
         self.usrname = usrname
-        self.password = password
         self.hashed_password = hashed_password
         self.email = email
         self.phone = phone
@@ -26,8 +25,6 @@ class User:
             + self.email
             + " Phone: "
             + self.phone
-            + " Accounts: "
-            + self.accounts
         )
 
     @classmethod
@@ -61,15 +58,21 @@ class User:
 
     @classmethod
     def sign_up(cls):
-        print("Sign up")
-        usrname = input("User Name: ")
+        print("Sign up: ")
+        unique_usrname = True 
+        while unique_usrname == True:
+            usrname = input("User Name: ")
+            unique_usrname = User.check_usr(usrname)
+            if unique_usrname == True:
+                print("Username already exits")        
         password = input("Password: ")
         hashed_password = cls.hash_password(password)
         email = input("Email: ")
         phone = input("Phone: ")
         try:
-            user = cls(usrname, password, hashed_password, email, phone)
-            print(f"Welome to SuperBroker {usrname}!")
+            user = cls(usrname, hashed_password, email, phone)
+            Account.create_account(usrname)
+            # print(f"Welome to SuperBroker {usrname}!")
             cls.save_user(user)
             return user
         except ValueError as err:
@@ -93,8 +96,8 @@ class User:
 
     @classmethod
     def login(cls):
-        print("Login")
-        usrname = input("Username: ")
+        print("Login: ")
+        usrname   = input("Username: ")
         password = input("Password: ")
         with open(cls.file_path, "r") as file:
             reader = csv.DictReader(file)
@@ -102,8 +105,7 @@ class User:
                 if row["usrname"] == usrname and cls.check_password(
                     password, row["password"]
                 ):
-                    print(f"Welcome {usrname}!")
-                    return True
+                    return usrname
             if not cls.check_usr(usrname):
                 print("User not found")
                 return False
@@ -135,8 +137,6 @@ class User:
     def usrname(self, usrname):
         if not usrname:
             raise ValueError("Missing name")
-        elif User.check_usr(usrname) == True:
-            raise ValueError("User already exists")
         self._usrname = usrname
 
     @email.setter
@@ -157,16 +157,5 @@ class User:
             raise ValueError("Missing phone")
         self._phone = phone
 
+
 User.initialize_csv()
-
-def main():
-    print("hello User")
-    #User.login()
-    User.sign_up() 
-
-main()
-
-
-
-
-
