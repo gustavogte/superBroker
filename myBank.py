@@ -52,12 +52,6 @@ def main():
     else:
         print(f"Thank you for using SuperBroker {user.usrname}\n")
 
-    # account = Account()
-    # print("Balance:", account.balance)
-    # account.deposit(100)
-    # account.withdraw(50)
-    # print("Balance:", account.balance)
-
 
 if __name__ == "__main__":
     main()
