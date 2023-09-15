@@ -21,7 +21,7 @@ def menu_1():
 def menu_2(user):
     while True:
         os.system("clear")
-        print(f"Welcome to SuperBroker {user}!\n")
+        print(f"Welcome to SuperBroker {user.usrname}!\n")
         print("1. Deposit")
         print("2. Withdraw")
         print("3. Check Balance")

@@ -9,8 +9,9 @@ class Account:
 
     def __init__(self, usrname, account_num, balance):
         self.usrname = usrname
-        self.account_num = Account.get_last_account() + 1 
-        self.balance = balance
+        #self.account_num = Account.get_last_account() + 1 
+        self.account_num = account_num
+        self.balance = int(balance)
         
     def __str__(self):
         return (
@@ -23,12 +24,12 @@ class Account:
         )
 
     def deposit(self, amount):
-        self._balance += amount
-        Account.update_balance(self._balance)
+        self.balance += amount
+        Account.update_balance(self.balance)
 
     def withdraw(self, amount):
-        self._balance -= amount
-        Account.update_balance(self._balance)
+        self.balance -= amount
+        Account.update_balance(self.balance)
 
     # this is a getter
     
@@ -53,7 +54,7 @@ class Account:
     def create_account(cls, usrname):
         print("\nSet up account:")
         account_usrname = usrname
-        account_num = Account.account_num
+        account_num = Account.get_last_account() + 1
         account_balance = 0
         account = cls(account_usrname, account_num, account_balance)
         print(f"\nDear user: *** {account.usrname} *** your New Account is *** {account.account_num} ***. Starting balance = ${account.balance:,.2f}  ")
@@ -96,7 +97,7 @@ class Account:
     
     @classmethod
     def update_balance(cls, new_balance):
-        with open(cls.file_path, "r") as file:
+        with open(cls.file_path, "w") as file:
             reader = csv.DictReader(file)
             for row in reader:
                 if row["account_num"] == cls.account_num:
