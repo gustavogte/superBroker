@@ -96,14 +96,16 @@ class Account:
             return False
     
     @classmethod
+    #leer y reemplazar balance field
     def update_balance(cls, new_balance):
-        with open(cls.file_path, "w") as file:
+        with open(cls.file_path, "r") as file:
             reader = csv.DictReader(file)
             for row in reader:
                 if row["account_num"] == cls.account_num:
                     row["balance"] = new_balance
                     return row["balance"]
             return False
+
 
     @classmethod
     def save_transaction(cls):
