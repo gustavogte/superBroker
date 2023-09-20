@@ -44,7 +44,7 @@ def main():
                     main()
         else:
             input("Press any key to continue ...")
-            selection = menu_1()
+            menu_1()
     else:
         print("Thank you for visit SuperBroker\n")
 
