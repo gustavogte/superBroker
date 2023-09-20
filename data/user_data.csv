@@ -1,2 +1,15 @@
 usrname,password,email,phone
-Gus,$2b$12$QYAvnaJkc2XEYUfLr3eZxOl7BK/OzwpPb8afhlh8NaLXaNuBZLGkO,@gus,1
+Gus,$2b$12$4Xz1oCVxm/Ln7GD29TOkOeTJ7BaCNeeGu3bgmMDs9KSWwwyLDn5Na,@gus,1
+Jenny,$2b$12$c/e5kbboLvRu5Xt2q8S5Oejxaeh8u8A6jF9Pu19tNis7FdHs3sSb6,@jenny,1
+Juan,$2b$12$BzUYlWjIw89ZybdKP2bDDOjtdb3wqb2yVuzcVuQIxN/w1SVkP80kO,@juan,1
+Pedro,$2b$12$cExqMzGbK6Hy0Boh2lztTeSzPeKE/2lc7sWyPu3.DiUAWx4e.wuw2,@pedro,1
+Jose,$2b$12$r1WgnYFtcwrBzHXllsJj2.2sBZ2J6i3hfQG6DHtRYa4D7I8wO95EO,@jose,1
+1,$2b$12$6fI5Pmj0/NrGOjvL2NvPi.iacI4Huy6Vl6kcfvNG7mjhF9K7bIfmm,1@,1
+Gustavo,$2b$12$4m85RUPJIsYMYJP2Hb5QYeABSVCaGzT2MbXNAP9Exj7ze1lEgCBgO,@gustavo,1
+Luz,$2b$12$IdnRFzIihzpaRGcsXuhYfOaYw5TtL3f6/0PrfGakxSbsMD6dLKP4y,@luz,1
+john,$2b$12$U9ytMC/umlCjVL0GZuTa5.3S9EW5iM8.JIk3X5qkTA9hXwhNXmaTu,@john,2
+Ana,$2b$12$B3irp9CXwDvpdDZboTjSzOKV2OR1aFk2k8AANlVxHw2DwM19noSlC,@ana,1
+2,$2b$12$eiXBGJCBzdDoKON/rqI3LOdwl7D7vnIzLn5FB1kKUfcbzXnL2zl3S,@2,2
+3,$2b$12$PSvyhpVie3owfNqWDoL.TuDy2ZfhM8geMihRkna60i9eAHCJ4kZnm,@3,3
+4,$2b$12$OunTGPmtPxZlNNct1pzqzuFxVx/cqDaPwKxmspqwvqWMZEsIo50QW,@4,4
+Luis,$2b$12$rdnl0uZICCVsz4FiOVjbo.2F9DUMTY1G.9/IFaGaOtkCxIp6iMYxW,@luis,1

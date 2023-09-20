@@ -23,6 +23,9 @@ class Account:
             + str(self.balance)
         )
 
+    def check_balance(self):
+        print(f"Your balance is: ${self.balance:,.2f}")
+    
     def deposit(self, amount):
         self.balance += amount
         Account.update_balance(self.balance)
@@ -32,7 +35,6 @@ class Account:
         Account.update_balance(self.balance)
 
     # this is a getter
-    
     @property
     def balance(self):
         return self._balance
@@ -87,6 +89,18 @@ class Account:
             )
 
     @classmethod
+    def get_account(cls, usrname):
+        with open(cls.file_path, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row["usrname"] == usrname:
+                    account = Account(
+                        row["usrname"],
+                        row["account_num"], 
+                        row["balance"])
+                    return account
+
+    @classmethod
     def check_account(cls, account):
         with open(cls.file_path, "r") as file:
             reader = csv.DictReader(file)
@@ -96,16 +110,19 @@ class Account:
             return False
     
     @classmethod
-    #leer y reemplazar balance field
     def update_balance(cls, new_balance):
         with open(cls.file_path, "r") as file:
             reader = csv.DictReader(file)
             for row in reader:
                 if row["account_num"] == cls.account_num:
                     row["balance"] = new_balance
-                    return row["balance"]
+                    print("hello")
+                    wait = input("Wait key ....")
+                    writer = csv.DictWriter(file, fieldnames=["usrname","account_num", "balance"])
+                    writer.writerow({
+                        "balance" : new_balance
+                    })
             return False
-
 
     @classmethod
     def save_transaction(cls):
@@ -113,67 +130,5 @@ class Account:
             writer = csv.DictWriter(file, fieldnames=["account_num", "amount", "balance", "date"])
             writer.writerow({"account_num": cls.account_num, "amount": cls.amount, "balance": cls.balance, "date": datetime.now()})
 
-    @classmethod
-    def get_balance(cls, account):
-        with open(cls.file_path, "r") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                if row["account_no"] == account:
-                    return row["balance"]
-            return False
-        
-    @classmethod
-    def get_usr(cls, account):
-        with open(cls.file_path, "r") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                if row["account_no"] == account:
-                    return row["usrname"]
-            return False
-    
-    @classmethod
-    def get_account(cls, usr):
-        with open(cls.file_path, "r") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                if row["usrname"] == usr:
-                    return row["account_num"]
-            return False
-        
-    @classmethod
-    def get_all_accounts(cls):
-        accounts = []
-        with open(cls.file_path, "r") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                accounts.append(row["account_no"])
-            return accounts
-    
-    @classmethod
-    def get_all_accounts_with_balance(cls):
-        accounts = []
-        with open(cls.file_path, "r") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                accounts.append([row["account_no"], row["balance"]])
-            return accounts
-    
-    @classmethod
-    def get_all_accounts_with_usr(cls):
-        accounts = []
-        with open(cls.file_path, "r") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                accounts.append([row["account_no"], row["usrname"]])
-            return accounts
-    
-    @classmethod
-    def get_all_accounts_with_usr_balance(cls):
-        accounts = []
-        with open(cls.file_path, "r") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                accounts.append([row["account_no"], row["usrname"], row["balance"]])
-            return accounts
     
 Account.initialize_csv()

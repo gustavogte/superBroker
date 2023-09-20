@@ -113,6 +113,20 @@ class User:
                 print("Invalid password")
             return False
 
+    @classmethod
+    def get_user(cls, usrname):
+        with open(cls.file_path, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row["usrname"] == usrname:
+                    user = User(
+                        row["usrname"],
+                        row["password"],
+                        row["email"],
+                        row["phone"],
+                    )
+                    return user
+
     # Getter => @property
     @property
     def usrname(self):

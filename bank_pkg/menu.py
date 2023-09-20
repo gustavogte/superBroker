@@ -27,10 +27,10 @@ def menu_2(user):
         print("3. Check Balance")
         print("4. Exit\n")
         try:
-            selection = int(input("Enter your choice: "))
-            if selection > 0 and selection < 5:
+            selection2 = int(input("Enter your choice: "))
+            if selection2 > 0 and selection2 < 5:
                 os.system("clear")
-                return selection
+                return selection2
             else:
                 True
         except ValueError:
