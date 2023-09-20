@@ -1,6 +1,5 @@
 import os
 
-
 def menu_1():
     while True:
         os.system("clear")
@@ -18,10 +17,11 @@ def menu_1():
         except ValueError:
             True
 
-def menu_2(user):
+def menu_2(user, account):
     while True:
         os.system("clear")
         print(f"Welcome to SuperBroker {user.usrname}!\n")
+        print(f"Account Number: {account.account_num}\n")
         print("1. Deposit")
         print("2. Withdraw")
         print("3. Check Balance")
