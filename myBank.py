@@ -42,6 +42,9 @@ def main():
                     input("\nPress any key to continue...")
                     login = False
                     main()
+        else:
+            input("Press any key to continue ...")
+            selection = menu_1()
     else:
         print("Thank you for visit SuperBroker\n")
 
