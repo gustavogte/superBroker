@@ -10,7 +10,7 @@ def main():
         print(f"\nWelcome to SuperBroker {user.usrname}!")
         input("\nPress any key to continue...")
         main()
-    elif selection == 2:
+    elif selection == 2: # Enter login sub-menu2
         usrname = User.login()
         if usrname:
             login = True
@@ -18,10 +18,10 @@ def main():
             account = Account.get_account(usrname)
             while login == True:
                 selection2 = menu_2(user, account)
-                if selection2 == 1:
+                if selection2 == 1: # Deposit
                     amount = input(f"Enter your deposit {user.usrname} to account {account.account_num}: ")
                     print("")
-                    ok = True
+                    ok = True # Error Check
                     while ok == True :
                         try:
                             account.deposit(amount)
@@ -31,10 +31,10 @@ def main():
                     Account.check_balance(account)
                     input("\nPress any key to continue...")
                     #menu_2(user, account)
-                elif selection2 == 2:
+                elif selection2 == 2: # Withdraw
                     amount = input(f"How much do you want to withdraw {user.usrname} from account {account.account_num}: ")
                     print("")
-                    ok = True
+                    ok = True # Error Check
                     while ok == True :
                         try:
                             account.withdraw(amount)
@@ -44,7 +44,7 @@ def main():
                     Account.check_balance(account)
                     input("\nPress any key to continue...")
                     #menu_2(user, account)
-                elif selection2 == 3:
+                elif selection2 == 3: # Check Balance
                     print(f"User: {user.usrname}  Account: {account.account_num}\n")
                     Account.check_balance(account)
                     input("\nPress any key to continue...")
