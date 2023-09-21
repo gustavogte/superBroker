@@ -27,6 +27,50 @@ class User:
             + self.phone
         )
 
+    # Getter => @property
+    @property
+    def usrname(self):
+        # _ use for the function not to colide with the variable
+        # _name is a private variable (honor system, not forced)
+        return self._usrname
+
+    @property
+    def email(self):
+        return self._email
+
+    @property
+    def password(self):
+        return self._password
+
+    @property
+    def phone(self):
+        return self._phone
+
+    # Setter => @x.setter
+    @usrname.setter
+    def usrname(self, usrname):
+        if not usrname:
+            raise ValueError("Missing name")
+        self._usrname = usrname
+
+    @email.setter
+    def email(self, email):
+        if "@" not in email:
+            raise ValueError("Invalid email")
+        self._email = email
+
+    @password.setter
+    def password(self, password):
+        if not password:
+            raise ValueError("Missing password")
+        self._password = password
+
+    @phone.setter
+    def phone(self, phone):
+        if not phone:
+            raise ValueError("Missing phone")
+        self._phone = phone
+
     @classmethod
     def initialize_csv(cls):
         if not os.path.exists(cls.file_path):
@@ -126,50 +170,5 @@ class User:
                         row["phone"],
                     )
                     return user
-
-    # Getter => @property
-    @property
-    def usrname(self):
-        # _ use for the function not to colide with the variable
-        # _name is a private variable (honor system, not forced)
-        return self._usrname
-
-    @property
-    def email(self):
-        return self._email
-
-    @property
-    def password(self):
-        return self._password
-
-    @property
-    def phone(self):
-        return self._phone
-
-    # Setter => @x.setter
-    @usrname.setter
-    def usrname(self, usrname):
-        if not usrname:
-            raise ValueError("Missing name")
-        self._usrname = usrname
-
-    @email.setter
-    def email(self, email):
-        if "@" not in email:
-            raise ValueError("Invalid email")
-        self._email = email
-
-    @password.setter
-    def password(self, password):
-        if not password:
-            raise ValueError("Missing password")
-        self._password = password
-
-    @phone.setter
-    def phone(self, phone):
-        if not phone:
-            raise ValueError("Missing phone")
-        self._phone = phone
-
 
 User.initialize_csv()

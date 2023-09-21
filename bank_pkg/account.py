@@ -11,7 +11,7 @@ class Account:
         self.usrname = usrname
         #self.account_num = Account.get_last_account() + 1 
         self.account_num = account_num
-        self.balance = int(balance)
+        self.balance = balance
         
     def __str__(self):
         return (
@@ -27,21 +27,40 @@ class Account:
         print(f"Your balance is: ${self.balance:,.2f}")
     
     def deposit(self, amount):
-        self.balance += amount
+        Account.check_amount(amount)
+        self.balance += int(amount)
         Account.update_balance(self.balance)
 
     def withdraw(self, amount):
-        self.balance -= amount
+        Account.check_amount(amount)
+        self.balance -= int(amount)
         Account.update_balance(self.balance)
 
     # this is a getter
     @property
     def balance(self):
         return self._balance
-    
+
     @balance.setter
-    def balance(self, value):
-        self._balance = value
+    def balance(self, balance):
+        try:
+            int(balance)
+        except (ValueError):
+            raise ValueError("Balance must be an number")
+        if int(balance) < 0:
+            raise ValueError("Account balance to not suffcient for this operation")
+        self._balance = int(balance)
+
+    @classmethod
+    def check_amount(self, amount):
+        try:
+            int(amount)
+        except (ValueError):
+            raise ValueError("Amount must be an number")
+        if int(amount) < 0:
+            raise ValueError("Amount must be greater than 0")
+        else:
+            return int(amount)
 
     @classmethod
     def initialize_csv(cls):

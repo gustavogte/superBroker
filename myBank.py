@@ -19,16 +19,28 @@ def main():
             while login == True:
                 selection2 = menu_2(user, account)
                 if selection2 == 1:
-                    amount = int(input(f"Enter your deposit {user.usrname} to account {account.account_num}: "))
+                    amount = input(f"Enter your deposit {user.usrname} to account {account.account_num}: ")
                     print("")
-                    account.deposit(amount)
+                    ok = True
+                    while ok == True :
+                        try:
+                            account.deposit(amount)
+                        except ValueError as err:
+                            print(err)
+                        ok = False
                     Account.check_balance(account)
                     input("\nPress any key to continue...")
                     #menu_2(user, account)
                 elif selection2 == 2:
-                    amount = int(input(f"How much do you want to withdraw {user.usrname} from account {account.account_num}: "))
+                    amount = input(f"How much do you want to withdraw {user.usrname} from account {account.account_num}: ")
                     print("")
-                    account.withdraw(amount)
+                    ok = True
+                    while ok == True :
+                        try:
+                            account.withdraw(amount)
+                        except ValueError as err:
+                            print(err)
+                        ok = False
                     Account.check_balance(account)
                     input("\nPress any key to continue...")
                     #menu_2(user, account)
@@ -44,7 +56,6 @@ def main():
                     main()
         else:
             input("Press any key to continue ...")
-            menu_1()
     else:
         print("Thank you for visit SuperBroker\n")
 

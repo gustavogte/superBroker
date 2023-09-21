@@ -22,6 +22,7 @@ def menu_2(user, account):
         os.system("clear")
         print(f"Welcome to SuperBroker {user.usrname}!\n")
         print(f"Account Number: {account.account_num}\n")
+        print(f"Account Balance: ${account.balance:,.2f}\n")
         print("1. Deposit")
         print("2. Withdraw")
         print("3. Check Balance")
