@@ -103,12 +103,12 @@ class User:
     @classmethod
     def sign_up(cls):
         print("Sign up: ")
-        unique_usrname = True 
+        unique_usrname = True
         while unique_usrname == True:
             usrname = input("User Name: ")
             unique_usrname = User.check_usr(usrname)
             if unique_usrname == True:
-                print("Username already exits")        
+                print("Username already exits")
         password = input("Password: ")
         hashed_password = cls.hash_password(password)
         email = input("Email: ")
@@ -141,7 +141,7 @@ class User:
     @classmethod
     def login(cls):
         print("Login: ")
-        usrname   = input("Username: ")
+        usrname = input("Username: ")
         password = input("Password: ")
         with open(cls.file_path, "r") as file:
             reader = csv.DictReader(file)
@@ -170,5 +170,6 @@ class User:
                         row["phone"],
                     )
                     return user
+
 
 User.initialize_csv()
